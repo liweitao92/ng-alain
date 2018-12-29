@@ -38,7 +38,7 @@ export class StartupService {
   load(): Promise<any> {
     // only works with promises
     // https://github.com/angular/angular/issues/15088
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       zip(
         this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
         this.httpClient.get('assets/tmp/app-data.json'),
@@ -67,6 +67,7 @@ export class StartupService {
             // 初始化菜单
             this.menuService.add(res.menu);
             // 设置页面标题的后缀
+            this.titleService.default = '';
             this.titleService.suffix = res.app.name;
           },
           () => {},

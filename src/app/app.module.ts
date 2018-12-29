@@ -28,7 +28,7 @@ const LANG_PROVIDES = [
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ALAIN_I18N_TOKEN } from '@delon/theme';
-import { I18NService } from '@core/i18n/i18n.service';
+import { I18NService } from '@core';
 
 // 加载i18n语言文件
 export function I18nHttpLoaderFactory(http: HttpClient) {
@@ -52,23 +52,10 @@ const I18NSERVICE_PROVIDES = [
 // #endregion
 
 // #region global third module
-import { UEditorModule } from 'ngx-ueditor';
-import { NgxTinymceModule } from 'ngx-tinymce';
-const GLOBAL_THIRD_MDOULES = [
-  UEditorModule.forRoot({
-    // **注：** 建议使用本地路径；以下为了减少 ng-alain 脚手架的包体大小引用了CDN，可能会有部分功能受影响
-    js: [
-      `//apps.bdimg.com/libs/ueditor/1.4.3.1/ueditor.config.js`,
-      `//apps.bdimg.com/libs/ueditor/1.4.3.1/ueditor.all.min.js`,
-    ],
-    options: {
-      UEDITOR_HOME_URL: `//apps.bdimg.com/libs/ueditor/1.4.3.1/`,
-    },
-  }),
-  NgxTinymceModule.forRoot({
-    baseURL: '//cdn.bootcss.com/tinymce/4.7.4/',
-  }),
+
+const GLOBAL_THIRD_MODULES = [
 ];
+
 // #endregion
 
 // #region JSON Schema form (using @delon/form)
@@ -79,7 +66,7 @@ const FORM_MODULES = [JsonSchemaModule];
 // #region Http Interceptors
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SimpleInterceptor } from '@delon/auth';
-import { DefaultInterceptor } from '@core/net/default.interceptor';
+import { DefaultInterceptor } from '@core';
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: SimpleInterceptor, multi: true },
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -87,7 +74,7 @@ const INTERCEPTOR_PROVIDES = [
 // #endregion
 
 // #region Startup Service
-import { StartupService } from '@core/startup/startup.service';
+import { StartupService } from '@core';
 export function StartupServiceFactory(
   startupService: StartupService,
 ): Function {
@@ -123,7 +110,7 @@ import { LayoutModule } from './layout/layout.module';
     LayoutModule,
     RoutesModule,
     ...I18NSERVICE_MODULES,
-    ...GLOBAL_THIRD_MDOULES,
+    ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,
   ],
   providers: [
